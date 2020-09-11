@@ -21,7 +21,6 @@ import br.com.supersim.blog.DTO.PublicationDTO;
 import br.com.supersim.blog.exception.PublicationException;
 import br.com.supersim.blog.exception.UserException;
 import br.com.supersim.blog.service.PublicationService;
-import br.com.supersim.blog.utils.AmazonUtils;
 
 @RestController
 @RequestMapping("/publication")
@@ -37,16 +36,11 @@ public class PublicationController {
 		return publicationService.save(publicationDTO, multipartFile);
 	}
 	
-	@GetMapping("/{fileName}")
-	public ResponseEntity<ByteArrayResource> download(@PathVariable String fileName) throws IllegalStateException, IOException {
-		return AmazonUtils.Download(fileName);
+	@GetMapping("/{photoKey}")
+	public ResponseEntity<ByteArrayResource> download(@PathVariable String photoKey) throws IllegalStateException, IOException {
+		return publicationService.getPhotoDownloadByKey(photoKey);
 		
 	}
-	
-//	@GetMapping("/{id}")
-//	public PublicationDTO publicationByUserEmail(@PathVariable Long id) throws IOException{
-//		return publicationService.getPublicationById(id);
-//	}
 	
 	@GetMapping("/all")
 	public List<PublicationDTO> allPublicationByUserEmail(@PathVariable String email){

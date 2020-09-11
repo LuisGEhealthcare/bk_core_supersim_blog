@@ -12,6 +12,10 @@ public interface UserService {
 	
 	public UserDTO update(User user);
 	
-	public UserDTO getUserByEmail(String email) throws UserException;
+	public UserDTO getUserDTOByEmail(String email) throws UserException;
+	
+	public User getUserByEmail(String email) throws UserException;
+	
+	public User getUserById(Long id);
 
 }

@@ -29,7 +29,7 @@ public class UserController {
 	
 	@GetMapping("/{email}")
 	public UserDTO getUserByEmail(@PathVariable String email) throws UserException {
-		return userService.getUserByEmail(email);
+		return userService.getUserDTOByEmail(email);
 	}
 
 }

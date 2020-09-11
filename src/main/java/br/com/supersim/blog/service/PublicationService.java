@@ -3,6 +3,8 @@ package br.com.supersim.blog.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.supersim.blog.DTO.PublicationDTO;
@@ -18,8 +20,10 @@ public interface PublicationService {
 	
 	public PublicationDTO update(Publication publication);
 	
-	public List<PublicationDTO> getAllByUserId(Long userId);
+	public List<PublicationDTO> getAllPublicationsByUserId(Long userId);
 	
 	public PublicationDTO getPublicationById(Long id) throws IOException;
+	
+	public ResponseEntity<ByteArrayResource> getPhotoDownloadByKey(String photoKey);
 
 }

@@ -22,21 +22,20 @@ import com.amazonaws.services.s3.model.S3Object;
 
 public class AmazonUtils {
 	
-	private static final String GET_AWS_KEY_ID = "AKIAINGDN3ULCKHT7WWQ";
-	private static final String GET_AWS_SECRET_KEY = "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";
-	private static final String BUCKET_S3_NAME = "photos-supersim";
-	private static final Regions CLIENT_REGION =  Regions.SA_EAST_1;
+	private static final Regions AWS_CLIENT_REGION = Regions.SA_EAST_1;
 	
-	public static void Upload(MultipartFile multipartFile, String fileName) throws IOException {
+	public static void Upload(final String AWS_KEY_ID, final String AWS_SECRET_KEY, 
+								final String BUCKET_S3_NAME, MultipartFile multipartFile, String fileName) 
+										throws IOException {
 		
 		ObjectMetadata data = new ObjectMetadata();
 		data.setContentType(multipartFile.getContentType());
 		data.setContentLength(multipartFile.getSize());
 		
 		try {
-			BasicAWSCredentials awsCreds = new BasicAWSCredentials(GET_AWS_KEY_ID, GET_AWS_SECRET_KEY);
+			BasicAWSCredentials awsCreds = new BasicAWSCredentials(AWS_KEY_ID, AWS_SECRET_KEY);
 			AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-										.withRegion(CLIENT_REGION)
+										.withRegion(AWS_CLIENT_REGION)
 										.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
 										.build();
 			
@@ -57,15 +56,16 @@ public class AmazonUtils {
         }
 	}
 	
-	public static ResponseEntity<ByteArrayResource> Download(String fileName) throws IOException {
+	public static ResponseEntity<ByteArrayResource> Download(final String AWS_KEY_ID, final String AWS_SECRET_KEY, 
+																final String BUCKET_S3_NAME, String fileName) throws IOException {
 		
 		S3Object headerOverrideObject = null;
 		
 		try{
 			
-			BasicAWSCredentials awsCreds = new BasicAWSCredentials(GET_AWS_KEY_ID, GET_AWS_SECRET_KEY);
+			BasicAWSCredentials awsCreds = new BasicAWSCredentials(AWS_KEY_ID, AWS_SECRET_KEY);
 			AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-										.withRegion(CLIENT_REGION)
+										.withRegion(AWS_CLIENT_REGION)
 										.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
 										.build();
 			

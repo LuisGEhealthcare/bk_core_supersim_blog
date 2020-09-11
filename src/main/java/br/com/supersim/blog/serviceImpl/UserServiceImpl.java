@@ -45,13 +45,33 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDTO getUserByEmail(String email) throws UserException {
+	public UserDTO getUserDTOByEmail(String email) throws UserException {
 		
 		User user = userRepository.findByEmail(email);
 		
 		if(user == null) { throw new UserException("INVALID_USER_EMAIL");}
 		
 		return new UserDTO(user);
+	}
+	
+	@Override
+	public User getUserByEmail(String email) throws UserException {
+		User user = userRepository.findByEmail(email);
+		
+		if(user == null) { throw new UserException("INVALID_USER_EMAIL");}
+		
+		return user;
+	}
+	
+
+	@Override
+	public User getUserById(Long id) {
+		
+		Optional<User> user = userRepository.findById(id);
+		
+		if(user.isPresent() == false) { return null;}
+		
+		return user.get();
 	}
 
 }

@@ -3,14 +3,18 @@ package br.com.supersim.blog.serviceImpl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.supersim.blog.DTO.PublicationDTO;
 import br.com.supersim.blog.DTO.UserDTO;
 import br.com.supersim.blog.entity.Category;
+import br.com.supersim.blog.entity.Properties;
 import br.com.supersim.blog.entity.Publication;
 import br.com.supersim.blog.exception.PublicationException;
 import br.com.supersim.blog.exception.UserException;
@@ -32,11 +36,14 @@ public class PublicationServiceImpl implements PublicationService {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private Properties properties;
 
 	@Override
 	public PublicationDTO save(PublicationDTO publicationDTO, MultipartFile multipartFile) throws UserException, PublicationException {
 		
-		UserDTO userPublication = userService.getUserByEmail(publicationDTO.getUserDTO().getEmail());
+		UserDTO userPublication = userService.getUserDTOByEmail(publicationDTO.getUserDTO().getEmail());
 		
 		if(userPublication == null) { throw new PublicationException("INVALID_USER_PUBLICATION");}
 		
@@ -56,7 +63,7 @@ public class PublicationServiceImpl implements PublicationService {
 				}
 			}
 			
-			AmazonUtils.Upload(multipartFile, photoKey);
+			AmazonUtils.Upload(properties.getAwsKeyId(), properties.getAwsSecretKey(), properties.getBucketS3Name(), multipartFile, photoKey);
 			Publication publication = new Publication(publicationDTO, photoKey);
 			publicationRepository.save(publication);
 		}
@@ -80,9 +87,8 @@ public class PublicationServiceImpl implements PublicationService {
 	}
 
 	@Override
-	public List<PublicationDTO> getAllByUserId(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PublicationDTO> getAllPublicationsByUserId(Long userId) {
+		return publicationRepository.findAll().stream().map(PublicationDTO::new).collect(Collectors.toList());
 	}
 	
 	private String generatePhotoKey(MultipartFile multipartFile) {
@@ -100,6 +106,18 @@ public class PublicationServiceImpl implements PublicationService {
 		PublicationDTO publicationDTO = new PublicationDTO(publication.get());
 		return publicationDTO;
 	}
+
+	@Override
+	public ResponseEntity<ByteArrayResource> getPhotoDownloadByKey(String photoKey) {
+		try {
+			return AmazonUtils.Download(properties.getAwsKeyId(), properties.getAwsSecretKey(), properties.getBucketS3Name(), photoKey);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 
 
 
