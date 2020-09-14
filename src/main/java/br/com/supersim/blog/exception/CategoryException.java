@@ -1,6 +1,6 @@
 package br.com.supersim.blog.exception;
 
-public class CategoryException extends Exception {
+public class CategoryException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	

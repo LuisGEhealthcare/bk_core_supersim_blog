@@ -45,6 +45,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/auth").permitAll()
 			.anyRequest().authenticated()
+			.and().cors()
 			.and().csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().addFilterBefore(new AuthenticationTokenFilter(tokenService, userService), UsernamePasswordAuthenticationFilter.class);

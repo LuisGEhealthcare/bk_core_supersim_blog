@@ -1,6 +1,8 @@
 package br.com.supersim.blog.DTO;
 
+
 import javax.validation.constraints.NotBlank;
+
 import br.com.supersim.blog.entity.Category;
 
 public class CategoryDTO {

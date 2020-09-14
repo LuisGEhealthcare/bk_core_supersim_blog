@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		Category category = getCategoryByName(categoryDTO.getName());
 		
-		if(category != null) { throw new CategoryException("CATEGORY_ALREADY_EXISTS"); }
+		if(category != null) { throw new CategoryException("Category already exists"); }
 		
 		Category newCategory = categoryRepository.save(new Category(categoryDTO));
 		
@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
 		Category category = getCategoryByName(categoryDTO.getName());
 		
 		if(category != null && category.getName().equals(categoryDTO.getName()) && category.getId().equals(categoryDTO.getId()) == false) {
-			throw new CategoryException("CATEGORY_ALREADY_EXISTS");
+			throw new CategoryException("Category already exists");
 		}
 		
 		Category updatedCategory = categoryRepository.save(new Category(categoryDTO));
