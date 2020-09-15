@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.supersim.blog.DTO.CategoryDTO;
 import br.com.supersim.blog.entity.Category;
+import br.com.supersim.blog.entity.Publication;
 import br.com.supersim.blog.exception.CategoryException;
 import br.com.supersim.blog.repository.CategoryRepository;
+import br.com.supersim.blog.repository.PublicationRepository;
 import br.com.supersim.blog.service.CategoryService;
 
 @Service
@@ -19,6 +21,9 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private PublicationRepository publicationRepository;
 	
 	@Override
 	public CategoryDTO save(CategoryDTO categoryDTO) throws CategoryException {
@@ -37,7 +42,11 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 		
-		if(categoryOptional.isPresent() == false) { throw new CategoryException("CATEGORY_NOT_FOUND"); } 
+		if(categoryOptional.isPresent() == false) { throw new CategoryException("Category not found"); } 
+		
+		List<Publication> publicationList = publicationRepository.findByCategory(categoryOptional.get());
+		
+		if(publicationList.isEmpty() == false) { throw new CategoryException("ERROR: There are publications related to this category"); } 
 		
 		categoryRepository.delete(categoryOptional.get());;
 	}

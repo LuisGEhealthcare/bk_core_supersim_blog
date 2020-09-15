@@ -43,6 +43,18 @@ public class Publication {
 		this.calendar = Calendar.getInstance();
 		this.user = publicationDTO.getUserDTO().transformToUser();
 	}
+	
+	
+
+	public Publication(Long id, PublicationDTO publicationDTO, String photoKey) {
+		this.id = id;
+		this.title = publicationDTO.getTitle();
+		this.content = publicationDTO.getContent();
+		this.photoKey = photoKey;
+		this.category = publicationDTO.getCategoryDTO().transformToCategory();
+		this.calendar = Calendar.getInstance();
+		this.user = publicationDTO.getUserDTO().transformToUser();
+	}
 
 	public Long getId() {
 		return id;
