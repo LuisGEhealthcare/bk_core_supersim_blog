@@ -11,9 +11,9 @@ import br.com.supersim.blog.entity.Publication;
 public class PublicationDTO {
 	
 	private Long id;
-	@NotBlank
+	@NotBlank(message = "Title is mandatory")
 	private String title;
-	@NotBlank
+	@NotBlank(message = "Content is mandatory")
 	private String content;
 	private String photoKey;
 	@NotNull

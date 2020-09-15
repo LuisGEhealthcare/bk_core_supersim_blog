@@ -10,9 +10,9 @@ import br.com.supersim.blog.entity.User;
 public class UserDTO {
 	
 	private Long id;
-	@NotBlank(message = "USER_NAME_IS_REQUIRED")
+	@NotBlank(message = "User name is required")
 	private String name;
-	@NotBlank(message = "USER_EMAIL_IS_REQUIRED")
+	@NotBlank(message = "User email is required")
 	private String email;
 	private List<Role> roleList;
 	

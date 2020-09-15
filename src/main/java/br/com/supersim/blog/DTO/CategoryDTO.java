@@ -8,7 +8,7 @@ import br.com.supersim.blog.entity.Category;
 public class CategoryDTO {
 
 	private Long id;
-	@NotBlank(message = "CATEGORY_NAME_IS_REQUIRED")
+	@NotBlank(message = "Category name is required")
 	private String name;
 	
 	public CategoryDTO() {

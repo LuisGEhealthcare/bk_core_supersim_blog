@@ -1,4 +1,4 @@
-package be.com.supersim.blog.config;
+package br.com.supersim.blog.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

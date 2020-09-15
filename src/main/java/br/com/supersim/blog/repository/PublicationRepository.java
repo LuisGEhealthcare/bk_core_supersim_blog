@@ -14,8 +14,7 @@ public interface PublicationRepository extends JpaRepository<Publication, Long> 
 	
 	List<Publication> findByCategory(Category category);
 	
-	
-	@Query(value="SELECT * FROM Publication ORDER BY Publication.calendar DESC", nativeQuery = true)
+	@Query(value="SELECT * FROM publication ORDER BY publication.calendar DESC", nativeQuery = true)
 	List<Publication> publicationOrdeyByDesc();
 	
 }

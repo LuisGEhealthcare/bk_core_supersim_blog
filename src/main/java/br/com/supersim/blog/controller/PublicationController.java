@@ -56,7 +56,7 @@ public class PublicationController {
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public PublicationDTO edit(
 			@RequestPart(value = "publication", required = true) @Valid PublicationDTO publicationDTO, 
-			@RequestPart(value = "file") MultipartFile multipartFile,
+			@RequestPart(value = "file", required = false) MultipartFile multipartFile,
 			Principal requestingUser) throws UserException, PublicationException {
 		return publicationService.update(publicationDTO, multipartFile, requestingUser);
 	}

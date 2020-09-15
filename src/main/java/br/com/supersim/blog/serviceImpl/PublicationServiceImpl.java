@@ -2,6 +2,7 @@ package br.com.supersim.blog.serviceImpl;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -135,6 +136,7 @@ public class PublicationServiceImpl implements PublicationService {
 			publication.setTitle(publicationDTO.getTitle());
 			publication.setContent(publicationDTO.getContent());
 			publication.setCategory(category);
+			publication.setCalendar(Calendar.getInstance());
 			return new PublicationDTO(publicationRepository.save(publication));
 		}
 		catch(IOException e) {
