@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.supersim.blog.DTO.PublicationDTO;
-import br.com.supersim.blog.entity.Publication;
 import br.com.supersim.blog.exception.PublicationException;
 import br.com.supersim.blog.exception.UserException;
 
